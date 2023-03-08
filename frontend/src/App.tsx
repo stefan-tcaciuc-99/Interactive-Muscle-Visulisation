@@ -83,16 +83,16 @@ function App() {
 
     // Highlight the material clicked on
     function highlightMaterial(event: MouseEvent) {
-      const material = modelViewerElement?.materialFromPoint(
+      const currentMaterial = modelViewerElement?.materialFromPoint(
         event.clientX,
         event.clientY
       );
 
-      if (material != null) {
-        if (material === selectedMaterial) {
+      if (currentMaterial != null) {
+        if (currentMaterial === selectedMaterial) {
           // If the clicked material is already selected, deselect it
 
-          material.pbrMetallicRoughness.setBaseColorFactor([1, 1, 1, 1]);
+          currentMaterial.pbrMetallicRoughness.setBaseColorFactor([1, 1, 1, 1]);
           setSelectedMaterial(null);
         } else {
           // Else, select the clicked material and deselect the previously selected material
@@ -103,8 +103,10 @@ function App() {
             ]);
           }
 
-          material.pbrMetallicRoughness.setBaseColorFactor([1, 0, 0.5, 1]);
-          setSelectedMaterial(material);
+          currentMaterial.pbrMetallicRoughness.setBaseColorFactor([1, 0, 0.5, 1]);
+          setSelectedMaterial(currentMaterial);
+          console.log("Material selected:", currentMaterial.name);
+
         }
       }
     }
