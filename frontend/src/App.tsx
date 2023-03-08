@@ -3,6 +3,7 @@ import axios from "axios";
 import "@google/model-viewer";
 import type { ModelViewerElement } from "@google/model-viewer";
 import "./app.css";
+import { Material } from "@google/model-viewer/lib/features/scene-graph/material";
 
 function useModelViewerRef() {
   const modelViewerElementRef = useRef<ModelViewerElement | null>(null);
@@ -12,14 +13,15 @@ function useModelViewerRef() {
     const modelViewerElement = modelViewerElementRef.current;
 
     async function loadModel() {
-      
-      if ("caches" in window) { // Check if caches are available in the browser
+      if ("caches" in window) {
+        // Check if caches are available in the browser
 
         try {
           const cache = await caches.open("model-cache");
           const response = await cache.match("/untitled.glb");
 
-          if (response) { // If the model is found in the cache, set the model URL to the cache URL
+          if (response) {
+            // If the model is found in the cache, set the model URL to the cache URL
 
             console.log("model found in cache");
             const blob = await response.blob();
@@ -29,9 +31,8 @@ function useModelViewerRef() {
               modelViewerElement.src = url;
               modelViewerElement.requestUpdate();
             }
-          } 
-          
-          else {  // Else if the model is not found in the cache, fetch it from the server and put the model in the cache for future use
+          } else {
+            // Else if the model is not found in the cache, fetch it from the server and put the model in the cache for future use
 
             console.log("model not found in cache");
             const response = await fetch("/untitled.glb");
@@ -44,9 +45,8 @@ function useModelViewerRef() {
               modelViewerElement.requestUpdate();
             }
           }
-        } 
-        
-        catch (error) { // On error loading the model from the cache set the model URL to the default URL
+        } catch (error) {
+          // On error loading the model from the cache set the model URL to the default URL
 
           console.log("Error loading model from cache:", error);
           if (modelViewerElement) {
@@ -54,10 +54,9 @@ function useModelViewerRef() {
             modelViewerElement.requestUpdate();
           }
         }
-      } 
-      
-      else { // If caches are not available in the browser, set the model URL to the default
-        
+      } else {
+        // If caches are not available in the browser, set the model URL to the default
+
         console.log("caches not available");
         if (modelViewerElement) {
           modelViewerElement.src = "/untitled.glb";
@@ -75,6 +74,39 @@ function useModelViewerRef() {
 function App() {
   const [serverMessage, setServerMessage] = useState("");
   const modelViewerElementRef = useModelViewerRef();
+  const [selectedMaterial, setSelectedMaterial] = useState<Material | null>(
+    null
+  );
+
+  useEffect(() => {
+    const modelViewerElement = modelViewerElementRef.current;
+
+    function highlightMaterial(event: MouseEvent) {
+      const material = modelViewerElement?.materialFromPoint(
+        event.clientX,
+        event.clientY
+      );
+
+      if (material != null && material !== selectedMaterial) {
+        if (selectedMaterial != null) {
+          selectedMaterial.pbrMetallicRoughness.setBaseColorFactor([1, 1, 1, 1]);
+        }
+
+        material.pbrMetallicRoughness.setBaseColorFactor([1, 0, 0.5, 1]);
+        setSelectedMaterial(material);
+      }
+    }
+
+    if (modelViewerElement != null) {
+      modelViewerElement.addEventListener("click", highlightMaterial);
+    }
+
+    return () => {
+      if (modelViewerElement != null) {
+        modelViewerElement.removeEventListener("click", highlightMaterial);
+      }
+    };
+  }, [modelViewerElementRef, selectedMaterial]);
 
   function sendMessageToServer() {
     axios
@@ -108,5 +140,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
