@@ -143,6 +143,7 @@ function App() {
           className="model-viewer"
           alt="A 3D model"
           camera-controls
+          disable-tap
           exposure="0.6"
           shadow-intensity="1.5"
           orbit="45deg 55deg 4m"
