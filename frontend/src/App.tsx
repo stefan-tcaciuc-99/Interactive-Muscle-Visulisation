@@ -81,28 +81,42 @@ function App() {
   useEffect(() => {
     const modelViewerElement = modelViewerElementRef.current;
 
+    // Highlight the material clicked on
     function highlightMaterial(event: MouseEvent) {
       const material = modelViewerElement?.materialFromPoint(
         event.clientX,
         event.clientY
       );
 
-      if (material != null && material !== selectedMaterial) {
-        if (selectedMaterial != null) {
-          selectedMaterial.pbrMetallicRoughness.setBaseColorFactor([1, 1, 1, 1]);
-        }
+      if (material != null) {
+        if (material === selectedMaterial) {
+          // If the clicked material is already selected, deselect it
 
-        material.pbrMetallicRoughness.setBaseColorFactor([1, 0, 0.5, 1]);
-        setSelectedMaterial(material);
+          material.pbrMetallicRoughness.setBaseColorFactor([1, 1, 1, 1]);
+          setSelectedMaterial(null);
+        } else {
+          // Else, select the clicked material and deselect the previously selected material
+
+          if (selectedMaterial != null) {
+            selectedMaterial.pbrMetallicRoughness.setBaseColorFactor([
+              1, 1, 1, 1,
+            ]);
+          }
+
+          material.pbrMetallicRoughness.setBaseColorFactor([1, 0, 0.5, 1]);
+          setSelectedMaterial(material);
+        }
       }
     }
 
     if (modelViewerElement != null) {
+      // Add event listener to model viewer element
       modelViewerElement.addEventListener("click", highlightMaterial);
     }
 
     return () => {
       if (modelViewerElement != null) {
+        // Remove event listener when component unmounts
         modelViewerElement.removeEventListener("click", highlightMaterial);
       }
     };
