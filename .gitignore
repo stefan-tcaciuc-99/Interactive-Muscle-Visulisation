@@ -15,3 +15,5 @@ backend/logs
 
 # Ignore any files specific to the development environment
 .vscode/
+
+frontend/.env
