@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword} from "firebase/auth";
-import auth from "../firebase";
 import { styled } from "@mui/system";
 import { TextField, Button, Container, Typography } from "@mui/material";
+import { loginWithEmailPassword } from "../firebaseAuth";
 
 const FormContainer = styled(Container)({
   display: "flex",
@@ -28,9 +27,10 @@ const Login: React.FC = () => {
     event.preventDefault();
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const data = await loginWithEmailPassword(email, password);
+      localStorage.setItem("token", data.token);
       navigate("/");
-    } catch (error:any) {
+    } catch (error: any) {
       alert(`Error: ${error.message}`);
     }
   };

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import auth from "../firebase";
 import { styled } from "@mui/system";
 import { TextField, Button, Container, Typography } from "@mui/material";
+import { registerWithEmailPassword } from "../firebaseAuth";
 
 const FormContainer = styled(Container)({
   display: "flex",
@@ -28,16 +27,19 @@ const Register: React.FC = () => {
     event.preventDefault();
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const data = await registerWithEmailPassword(email, password);
+      localStorage.setItem("token", data.token);
       navigate("/");
-    } catch (error:any) {
+    } catch (error: any) {
       alert(`Error: ${error.message}`);
     }
   };
 
   return (
     <FormContainer maxWidth="xs">
-      <Typography variant="h4" mb={4}>Register</Typography>
+      <Typography variant="h4" mb={4}>
+        Register
+      </Typography>
       <RegisterForm onSubmit={handleSubmit}>
         <TextField
           label="Email"
@@ -52,11 +54,12 @@ const Register: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <Button type="submit" variant="contained">Register</Button>
+        <Button type="submit" variant="contained">
+          Register
+        </Button>
       </RegisterForm>
     </FormContainer>
   );
 };
 
 export default Register;
-``
