@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/system";
 import { TextField, Button, Container, Typography } from "@mui/material";
-import { loginWithEmailPassword } from "../firebaseAuth";
-
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { app } from "../firebase";
 
 const FormContainer = styled(Container)({
   display: "flex",
@@ -26,16 +26,19 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
+  
+    const auth = getAuth(app);
+  
     try {
-      const data = await loginWithEmailPassword(email, password);
-      localStorage.setItem("token", data.token);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const customToken = await userCredential.user.getIdToken();
+      localStorage.setItem("token", customToken);
       navigate("/");
     } catch (error: any) {
       alert(`Error: ${error.message}`);
     }
   };
-
+  
 
   return (
     <FormContainer maxWidth="xs">
