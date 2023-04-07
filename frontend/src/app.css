@@ -6,34 +6,26 @@ body {
   padding: 0;
 }
 
-.parent {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-template-rows: 9fr 1fr;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
-  justify-items: stretch;
-  align-items: stretch;
-  height: 100vh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
+
+.header {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 16px;
 }
 
-.div1 {
-  grid-area: 1 / 1 / 2 / 2;
-}
 
-.div2 {
-  grid-area: 1 / 2 / 2 / 3;
-}
-
-.div3 {
-  grid-area: 2 / 1 / 3 / 3;
+.model-viewer-container {
+  height: 80vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .model-viewer {
-  border: 3px solid #333;
   height: 100%;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
 }

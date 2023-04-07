@@ -16,7 +16,7 @@ export default function useHighlightMaterial(
         event.clientY
       );
 
-      if (currentMaterial) {
+      if (currentMaterial&& currentMaterial.name !== "defaultMat.003") {
         if (currentMaterial === selectedMaterial) {
           // If the clicked material is already selected, deselect it
 
