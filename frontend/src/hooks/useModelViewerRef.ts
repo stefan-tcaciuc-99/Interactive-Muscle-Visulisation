@@ -1,6 +1,5 @@
 import {useEffect, useRef } from "react";
 import type { ModelViewerElement } from "@google/model-viewer";
-
 function useModelViewerRef() {
   const modelViewerElementRef = useRef<ModelViewerElement | null>(null);
 
@@ -58,7 +57,9 @@ function useModelViewerRef() {
     }
 
     loadModel();
+  
   }, []);
+  
 
   return modelViewerElementRef;
 }

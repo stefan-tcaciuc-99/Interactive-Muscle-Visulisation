@@ -4,6 +4,7 @@ import { styled } from "@mui/system";
 import { TextField, Button, Container, Typography } from "@mui/material";
 import { loginWithEmailPassword } from "../firebaseAuth";
 
+
 const FormContainer = styled(Container)({
   display: "flex",
   flexDirection: "column",
@@ -34,6 +35,7 @@ const Login: React.FC = () => {
       alert(`Error: ${error.message}`);
     }
   };
+
 
   return (
     <FormContainer maxWidth="xs">
