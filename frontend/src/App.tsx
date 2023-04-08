@@ -10,6 +10,7 @@ import { Grid } from '@mui/material';
 
 function HomePage() {
   const modelViewerElementRef = useModelViewerRef();
+  
 
   return (
     <div className="parent">
