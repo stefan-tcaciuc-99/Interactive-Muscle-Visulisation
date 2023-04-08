@@ -1,12 +1,12 @@
 import React from "react";
 import { Button, Box } from "@mui/material";
 
-interface ExerciseListProps {
-  exercises: string[];
+interface WorkoutPlanProps {
+  workoutPlan: string[];
   onSelect: (exercise: string) => void;
 }
 
-const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, onSelect }) => {
+const WorkoutPlan: React.FC<WorkoutPlanProps> = ({ workoutPlan, onSelect }) => {
   return (
     <Box
       display="flex"
@@ -15,17 +15,17 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, onSelect }) => {
       flexWrap="wrap"
       gap={1}
     >
-      {exercises.map((exercise) => (
+      {workoutPlan.map((exercise, index) => (
         <Button
-          key={exercise}
+          key={`${exercise}-${index}`}
           variant="outlined"
           onClick={() => onSelect(exercise)}
         >
-          {exercise}
+          {`${index + 1}. ${exercise}`}
         </Button>
       ))}
     </Box>
   );
 };
 
-export default ExerciseList;
+export default WorkoutPlan;

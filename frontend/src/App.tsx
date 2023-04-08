@@ -11,11 +11,11 @@ import ExerciseTypeSelector from "./components/ExerciseTypeSelector";
 import useExerciseData from "./hooks/useExerciseData";
 import { exerciseTypes, exerciseData } from "./services/exerciseService";
 import ExerciseList from "./components/ExerciseList";
-
+import WorkoutPlan from "./components/WorkoutPlan";
 function HomePage() {
   const modelViewerElementRef = useModelViewerRef();
 
-  const { selectedExerciseType, selectExerciseType, exercises } =
+  const { selectedExerciseType, selectExerciseType, exercises,addExerciseToWorkoutPlan,removeExerciseFromWorkoutPlan,workoutPlan } =
     useExerciseData(exerciseData);
 
   return (
@@ -45,24 +45,30 @@ function HomePage() {
           }}
         >
           <ModelViewer modelViewerRef={modelViewerElementRef} />
-          <Box sx={{ marginLeft: '16px' }}>
-          <Paper sx={{ padding: "16px", width: '320px' }}>
+          <Box sx={{ marginLeft: "16px" }}>
+            <Paper sx={{ padding: "16px", width: "320px" }}>
               <ExerciseTypeSelector
                 exerciseTypes={exerciseTypes}
                 selectedType={selectedExerciseType}
                 onSelect={selectExerciseType}
               />
             </Paper>
-            {selectedExerciseType && (
+            {selectedExerciseType && exercises.length > 0 && (
               <Paper sx={{ padding: "16px", marginTop: "16px" }}>
                 <ExerciseList
                   exercises={exercises}
-                  onSelect={(exercise) =>
-                    console.log("Selected exercise:", exercise)
-                  }
+                  onSelect={addExerciseToWorkoutPlan}
                 />
               </Paper>
             )}
+            {workoutPlan.length > 0 && (
+            <Paper sx={{ padding: "16px", marginTop: "16px" }}>
+              <WorkoutPlan
+                workoutPlan={workoutPlan}
+                onSelect={removeExerciseFromWorkoutPlan}
+              />
+            </Paper>
+          )}
           </Box>
         </Grid>
         <Grid
