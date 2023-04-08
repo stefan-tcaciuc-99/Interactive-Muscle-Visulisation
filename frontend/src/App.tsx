@@ -6,16 +6,17 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import AuthButtons from "./components/AuthButtons";
 import "./app.css";
-import { Grid, Paper } from "@mui/material";
+import { Box, Grid, Paper } from "@mui/material";
 import ExerciseTypeSelector from "./components/ExerciseTypeSelector";
 import useExerciseData from "./hooks/useExerciseData";
-import { exerciseTypes } from "./services/exerciseService";
+import { exerciseTypes, exerciseData } from "./services/exerciseService";
+import ExerciseList from "./components/ExerciseList";
 
 function HomePage() {
   const modelViewerElementRef = useModelViewerRef();
 
-  const { selectedExerciseType, selectExerciseType } =
-    useExerciseData(exerciseTypes);
+  const { selectedExerciseType, selectExerciseType, exercises } =
+    useExerciseData(exerciseData);
 
   return (
     <div className="parent">
@@ -30,28 +31,40 @@ function HomePage() {
           }}
         ></Grid>
         <Grid
-  item
-  xs={12}
-  sm={8}
-  md={9}
-  sx={{
-    marginBottom: "16px",
-    display: "flex",
-    alignItems: "flex-start",
-    backgroundColor: "rgba(255, 0, 0, 0.2)",
-    paddingTop: "16px",
-    paddingLeft: "16px",
-  }}
->
-  <ModelViewer modelViewerRef={modelViewerElementRef} />
-  <Paper sx={{ padding: "16px", marginLeft: "16px" }}>
-    <ExerciseTypeSelector
-      exerciseTypes={exerciseTypes}
-      selectedType={selectedExerciseType}
-      onSelect={selectExerciseType}
-    />
-  </Paper>
-</Grid>
+          item
+          xs={12}
+          sm={8}
+          md={9}
+          sx={{
+            marginBottom: "16px",
+            display: "flex",
+            alignItems: "flex-start",
+            backgroundColor: "rgba(255, 0, 0, 0.2)",
+            paddingTop: "16px",
+            paddingLeft: "16px",
+          }}
+        >
+          <ModelViewer modelViewerRef={modelViewerElementRef} />
+          <Box sx={{ marginLeft: '16px' }}>
+          <Paper sx={{ padding: "16px", width: '320px' }}>
+              <ExerciseTypeSelector
+                exerciseTypes={exerciseTypes}
+                selectedType={selectedExerciseType}
+                onSelect={selectExerciseType}
+              />
+            </Paper>
+            {selectedExerciseType && (
+              <Paper sx={{ padding: "16px", marginTop: "16px" }}>
+                <ExerciseList
+                  exercises={exercises}
+                  onSelect={(exercise) =>
+                    console.log("Selected exercise:", exercise)
+                  }
+                />
+              </Paper>
+            )}
+          </Box>
+        </Grid>
         <Grid
           item
           xs={12}
@@ -67,7 +80,6 @@ function HomePage() {
           <header className="header">
             <AuthButtons />
           </header>
-          
         </Grid>
         <Grid
           item

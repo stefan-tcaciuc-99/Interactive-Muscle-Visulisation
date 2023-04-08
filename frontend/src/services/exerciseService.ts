@@ -1,4 +1,4 @@
-const exerciseData={
+export const exerciseData={
     push:['Bench','Incline','Dips','Pushups','Chest Fly'],
     machine:['Chest Press','Chest Fly','Chest Pull','Chest Extension'],
     freeWeight:['Deadlift','Squat','Barbell Row']

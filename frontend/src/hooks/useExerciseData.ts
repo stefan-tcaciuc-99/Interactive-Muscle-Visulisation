@@ -1,13 +1,22 @@
-import {useState} from 'react';
+import { useState, useEffect } from "react";
 
-const useExerciseData = (exerciseTypes:string[]) => {
-    const [selectedExerciseType, setSelectedExerciseType] = useState<string|null>(null);
-    
-    const selectExerciseType = (exerciseType: string) => {
-        setSelectedExerciseType(exerciseType);
+const useExerciseData = (exerciseData: any) => {
+  const [selectedExerciseType, setSelectedExerciseType] = useState<string | null>(null);
+  const [exercises, setExercises] = useState<string[]>([]);
+
+  const selectExerciseType = (exerciseType: string) => {
+    setSelectedExerciseType(exerciseType);
+  };
+
+  useEffect(() => {
+    if (selectedExerciseType) {
+      setExercises(exerciseData[selectedExerciseType]);
+    } else {
+      setExercises([]);
     }
-    
-    return {selectedExerciseType, selectExerciseType};
-}
+  }, [selectedExerciseType]);
+  
+  return { selectedExerciseType, selectExerciseType, exercises };
+};
 
 export default useExerciseData;
