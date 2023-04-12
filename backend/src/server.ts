@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { Request, Response } from 'express';
+import exerciseController from './exerciseController';
 
 // Create Express app
 const app = express();
@@ -16,6 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req: Request, res: Response) => {
   res.send('API is working');
 });
+
+app.use('/exercises', exerciseController);
 
 // Start the server
 const port = 9000;
