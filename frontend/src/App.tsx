@@ -9,14 +9,20 @@ import "./app.css";
 import { Box, Grid, Paper } from "@mui/material";
 import ExerciseTypeSelector from "./components/ExerciseTypeSelector";
 import useExerciseData from "./hooks/useExerciseData";
-import { exerciseTypes, exerciseData } from "./services/exerciseService";
+import { exerciseData } from "./services/exerciseService";
 import ExerciseList from "./components/ExerciseList";
 import WorkoutPlan from "./components/WorkoutPlan";
 function HomePage() {
   const modelViewerElementRef = useModelViewerRef();
 
-  const { selectedExerciseType, selectExerciseType, exercises,addExerciseToWorkoutPlan,removeExerciseFromWorkoutPlan,workoutPlan } =
-    useExerciseData(exerciseData);
+  const {
+    selectedExerciseType,
+    selectExerciseType,
+    exercises,
+    addExerciseToWorkoutPlan,
+    removeExerciseFromWorkoutPlan,
+    workoutPlan,
+  } = useExerciseData(exerciseData);
 
   return (
     <div className="parent">
@@ -36,6 +42,8 @@ function HomePage() {
           sm={8}
           md={9}
           sx={{
+            flexGrow: 1,
+            minWidth: "60%",
             marginBottom: "16px",
             display: "flex",
             alignItems: "flex-start",
@@ -45,10 +53,16 @@ function HomePage() {
           }}
         >
           <ModelViewer modelViewerRef={modelViewerElementRef} />
-          <Box sx={{ marginLeft: "16px" }}>
-            <Paper sx={{ padding: "16px", width: "320px" }}>
+          <Box
+            sx={{
+              marginLeft: "16px",
+              flexGrow: 1,
+              maxWidth: "64%",
+              flexShrink: 1,
+            }}
+          >
+            <Paper sx={{ padding: "16px", width: "100%" }}>
               <ExerciseTypeSelector
-                exerciseTypes={exerciseTypes}
                 selectedType={selectedExerciseType}
                 onSelect={selectExerciseType}
               />
@@ -62,13 +76,13 @@ function HomePage() {
               </Paper>
             )}
             {workoutPlan.length > 0 && (
-            <Paper sx={{ padding: "16px", marginTop: "16px" }}>
-              <WorkoutPlan
-                workoutPlan={workoutPlan}
-                onSelect={removeExerciseFromWorkoutPlan}
-              />
-            </Paper>
-          )}
+              <Paper sx={{ padding: "16px", marginTop: "16px" }}>
+                <WorkoutPlan
+                  workoutPlan={workoutPlan}
+                  onSelect={removeExerciseFromWorkoutPlan}
+                />
+              </Paper>
+            )}
           </Box>
         </Grid>
         <Grid
