@@ -26,8 +26,8 @@ router.get("/", async (req: Request, res: Response) => {
         params: {
           exercisename: null,
           bodypart: null,
-          musclegroup: muscle,
-          apparatus: apparatus,
+          musclegroup: muscle || null,
+          apparatus: apparatus || null,
           difficulty: null,
           utility_name: null,
           movement_name: null,
@@ -44,8 +44,13 @@ router.get("/", async (req: Request, res: Response) => {
         },
       }
     );
+
+    const exercises = Object.values(exerciseResponse.data.exercises);
+
+    console.log("Exercise response:", exercises);
+
     console.log("Sending response...");
-    res.json(exerciseResponse.data);
+    res.json(exercises);
   } catch (error) {
     console.error("Error fetching exercise data:", error);
     res.status(500).json({ message: "Error fetching exercise data" });

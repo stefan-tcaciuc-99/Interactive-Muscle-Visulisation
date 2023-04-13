@@ -1,37 +1,51 @@
 import { useState, useEffect } from "react";
+import { getExercisesBySelection } from "../services/apiService";
+import { ExerciseData } from "../components/ExerciseList";
 
 const useExerciseData = (exerciseData: any) => {
   const [selectedExerciseType, setSelectedExerciseType] = useState<
     string | null
   >(null);
-  const [exercises, setExercises] = useState<string[]>([]);
-  const [workoutPlan, setWorkoutPlan] = useState<string[]>([]);
+  const [exercises, setExercises] = useState<ExerciseData[]>([]);
+  const [workoutPlan, setWorkoutPlan] = useState<ExerciseData[]>([]);
+  const [selectedMuscle, setSelectedMuscle] = useState<string | null>(null);
 
   const selectExerciseType = (exerciseType: string) => {
     setSelectedExerciseType(exerciseType);
   };
 
-  const addExerciseToWorkoutPlan = (exercise: string) => {
-    setWorkoutPlan([...workoutPlan, exercise]);
-    setExercises(exercises.filter((ex) => ex !== exercise));
+  const selectMuscle = (muscle: string|null) => {
+    setSelectedMuscle(muscle);
   };
 
-  const removeExerciseFromWorkoutPlan = (exercise: string) => {
-    setExercises([...exercises, exercise]);
-    setWorkoutPlan(workoutPlan.filter((ex) => ex !== exercise));
+  const addExerciseToWorkoutPlan = (exercise: ExerciseData) => {
+    setWorkoutPlan([...workoutPlan, exercise]);
+    setExercises(exercises.filter((ex) => ex.Exercise_Id !== exercise.Exercise_Id));
   };
+  
+  const removeExerciseFromWorkoutPlan = (exercise: ExerciseData) => {
+    setExercises([...exercises, exercise]);
+    setWorkoutPlan(workoutPlan.filter((ex) => ex.Exercise_Id !== exercise.Exercise_Id));
+  };
+  
 
   useEffect(() => {
-    if (selectedExerciseType) {
-      setExercises(exerciseData[selectedExerciseType]);
+    if (selectedExerciseType || selectedMuscle) {
+      getExercisesBySelection(selectedMuscle, selectedExerciseType).then((response) => {
+        console.log("API response:", response);
+        setExercises(response);
+      });
     } else {
       setExercises([]);
     }
-  }, [selectedExerciseType]);
+  }, [selectedExerciseType, selectedMuscle]);
+
 
   return {
     selectedExerciseType,
     selectExerciseType,
+    selectedMuscle,
+    selectMuscle,
     exercises,
     workoutPlan,
     addExerciseToWorkoutPlan,

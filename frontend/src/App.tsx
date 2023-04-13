@@ -9,20 +9,26 @@ import "./app.css";
 import { Box, Grid, Paper } from "@mui/material";
 import ExerciseTypeSelector from "./components/ExerciseTypeSelector";
 import useExerciseData from "./hooks/useExerciseData";
-import { exerciseData } from "./services/exerciseService";
 import ExerciseList from "./components/ExerciseList";
 import WorkoutPlan from "./components/WorkoutPlan";
+
 function HomePage() {
   const modelViewerElementRef = useModelViewerRef();
 
   const {
     selectedExerciseType,
     selectExerciseType,
+    selectMuscle,
     exercises,
     addExerciseToWorkoutPlan,
     removeExerciseFromWorkoutPlan,
     workoutPlan,
-  } = useExerciseData(exerciseData);
+  } = useExerciseData([]);
+
+  console.log('Selected Exercise Type:', selectedExerciseType);
+  console.log('Exercises:', exercises);
+  console.log('Workout Plan:', workoutPlan);
+
 
   return (
     <div className="parent">
@@ -52,7 +58,7 @@ function HomePage() {
             paddingLeft: "16px",
           }}
         >
-          <ModelViewer modelViewerRef={modelViewerElementRef} />
+          <ModelViewer modelViewerRef={modelViewerElementRef} onMuscleSelected={selectMuscle} />
           <Box
             sx={{
               marginLeft: "16px",
@@ -67,7 +73,7 @@ function HomePage() {
                 onSelect={selectExerciseType}
               />
             </Paper>
-            {selectedExerciseType && exercises.length > 0 && (
+            {selectedExerciseType && exercises && exercises.length > 0 && (
               <Paper sx={{ padding: "16px", marginTop: "16px" }}>
                 <ExerciseList
                   exercises={exercises}
@@ -113,6 +119,7 @@ function HomePage() {
 }
 
 function App() {
+  
   return (
     <Router>
       <Routes>

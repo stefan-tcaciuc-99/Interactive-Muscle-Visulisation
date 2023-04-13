@@ -1,12 +1,17 @@
 import axios from 'axios';
 
-export async function sendMessageToServer(
-  setServerMessage: React.Dispatch<React.SetStateAction<string>>
-) {
+export const getExercisesBySelection = async (muscle: string | null, apparatus: string | null) => {
   try {
-    const response = await axios.get('/api');
-    setServerMessage(response.data);
+    const response = await axios.get("/exercises", {
+      params: {
+        muscle,
+        apparatus,
+      },
+    });
+
+    return response.data;
   } catch (error) {
-    console.log('Error fetching message:', error);
+    console.error("Error fetching exercises:", error);
+    return [];
   }
-}
+};

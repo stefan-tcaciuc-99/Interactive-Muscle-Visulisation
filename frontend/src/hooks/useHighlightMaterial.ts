@@ -3,7 +3,8 @@ import type { ModelViewerElement } from "@google/model-viewer";
 import { Material } from "@google/model-viewer/lib/features/scene-graph/material";
 
 export default function useHighlightMaterial(
-  modelViewerRef: RefObject<ModelViewerElement>
+  modelViewerRef: RefObject<ModelViewerElement>,
+  onMuscleSelected: (muscle: string | null) => void
 ) {
   useEffect(() => {
     const modelViewerElement = modelViewerRef.current;
@@ -16,7 +17,7 @@ export default function useHighlightMaterial(
         event.clientY
       );
 
-      if (currentMaterial&& currentMaterial.name !== "defaultMat.003") {
+      if (currentMaterial && currentMaterial.name !== "defaultMat.003") {
         if (currentMaterial === selectedMaterial) {
           // If the clicked material is already selected, deselect it
 
@@ -37,6 +38,9 @@ export default function useHighlightMaterial(
           selectedMaterial = currentMaterial;
           console.log("Material selected:", currentMaterial.name);
         }
+        onMuscleSelected(selectedMaterial?.name || null);
+      } else {
+        onMuscleSelected(null);
       }
     }
 

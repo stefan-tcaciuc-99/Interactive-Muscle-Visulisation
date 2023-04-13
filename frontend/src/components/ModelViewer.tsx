@@ -5,10 +5,11 @@ import { Paper } from "@mui/material";
 
 interface ModelViewerProps {
   modelViewerRef: React.MutableRefObject<ModelViewerElement | null>;
+  onMuscleSelected: (muscle: string | null) => void;
 }
 
-const ModelViewer: React.FC<ModelViewerProps> = ({ modelViewerRef }) => {
-  useHighlightMaterial(modelViewerRef);
+const ModelViewer: React.FC<ModelViewerProps> = ({ modelViewerRef ,onMuscleSelected}) => {
+  useHighlightMaterial(modelViewerRef,onMuscleSelected);
 
   return (
     <Paper elevation={4} sx={{ display: 'inline-block', overflow: 'hidden',padding: "16px", alignItems: "center", justifyContent: "center",marginLeft:"16px"}}>

@@ -1,9 +1,14 @@
 import React from "react";
 import { Button, Box } from "@mui/material";
 
+export interface ExerciseData {
+  Exercise_Id: number;
+  Exercise_Name: string;
+}
+
 interface ExerciseListProps {
-  exercises: string[];
-  onSelect: (exercise: string) => void;
+  exercises: ExerciseData[];
+  onSelect: (exercise: ExerciseData) => void;
 }
 
 const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, onSelect }) => {
@@ -17,11 +22,11 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, onSelect }) => {
     >
       {exercises.map((exercise) => (
         <Button
-          key={exercise}
+          key={exercise.Exercise_Id}
           variant="outlined"
           onClick={() => onSelect(exercise)}
         >
-          {exercise}
+          {exercise.Exercise_Name}
         </Button>
       ))}
     </Box>
