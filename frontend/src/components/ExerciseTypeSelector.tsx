@@ -3,7 +3,7 @@ import { Button, Box } from "@mui/material";
 
 interface ExerciseTypeSelectorProps {
   selectedType: string | null;
-  onSelect: (type: string) => void;
+  onSelect: (type: string|null) => void;
 }
 
 const ExerciseTypeSelector: React.FC<ExerciseTypeSelectorProps> = ({
@@ -34,6 +34,13 @@ const ExerciseTypeSelector: React.FC<ExerciseTypeSelectorProps> = ({
     "Atlas Stone",
   ];
 
+  const handleClick = (type: string) => {
+    if (selectedType === type) {
+      onSelect(null);
+    } else {
+      onSelect(type);
+    }
+  };
   return (
     <Box
       display="flex"
@@ -45,7 +52,7 @@ const ExerciseTypeSelector: React.FC<ExerciseTypeSelectorProps> = ({
       {apparatusTypes.map((type) => (
         <Button
           key={type}
-          onClick={() => onSelect(type)}
+          onClick={() => handleClick(type)}
           variant={selectedType === type ? "contained" : "outlined"}
           color={selectedType === type ? "primary" : undefined}
         >

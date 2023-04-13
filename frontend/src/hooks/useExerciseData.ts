@@ -3,6 +3,7 @@ import { getExercisesBySelection } from "../services/apiService";
 import { ExerciseData } from "../components/ExerciseList";
 
 const useExerciseData = (exerciseData: any) => {
+  
   const [selectedExerciseType, setSelectedExerciseType] = useState<
     string | null
   >(null);
@@ -10,7 +11,7 @@ const useExerciseData = (exerciseData: any) => {
   const [workoutPlan, setWorkoutPlan] = useState<ExerciseData[]>([]);
   const [selectedMuscle, setSelectedMuscle] = useState<string | null>(null);
 
-  const selectExerciseType = (exerciseType: string) => {
+  const selectExerciseType = (exerciseType: string|null) => {
     setSelectedExerciseType(exerciseType);
   };
 
@@ -32,7 +33,6 @@ const useExerciseData = (exerciseData: any) => {
   useEffect(() => {
     if (selectedExerciseType || selectedMuscle) {
       getExercisesBySelection(selectedMuscle, selectedExerciseType).then((response) => {
-        console.log("API response:", response);
         setExercises(response);
       });
     } else {

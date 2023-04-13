@@ -18,6 +18,7 @@ function HomePage() {
   const {
     selectedExerciseType,
     selectExerciseType,
+    selectedMuscle,
     selectMuscle,
     exercises,
     addExerciseToWorkoutPlan,
@@ -28,6 +29,8 @@ function HomePage() {
   console.log('Selected Exercise Type:', selectedExerciseType);
   console.log('Exercises:', exercises);
   console.log('Workout Plan:', workoutPlan);
+  console.log('Muscle:', selectedMuscle);
+
 
 
   return (

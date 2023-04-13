@@ -40,7 +40,8 @@ router.get("/", async (req: Request, res: Response) => {
 
     const exercises = Object.values(exerciseResponse.data.exercises);
 
-    console.log("Exercise response:", exercises);
+    console.log(bodypart, apparatus);
+    console.log("Exercise response:", exerciseResponse);
 
     console.log("Sending response...");
     res.json(exercises);
