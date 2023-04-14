@@ -12,13 +12,19 @@ const AuthButtonsContainer = styled(Box)(({ theme }) => ({
   position: "absolute",
   top: 0,
   right: 0,
-}));
+  marginRight: "194px",
 
+}));
 
 const AuthButtons: React.FC = () => {
   return (
     <AuthButtonsContainer>
-      <Button component={RouterLink} to="/login" variant="outlined" style={{marginTop:8}}>
+      <Button
+        component={RouterLink}
+        to="/login"
+        variant="outlined"
+        style={{ backgroundColor: "white", marginTop: 8 }}
+      >
         Login
       </Button>
       <Button
@@ -26,7 +32,7 @@ const AuthButtons: React.FC = () => {
         to="/register"
         variant="contained"
         color="primary"
-        style={{ marginLeft: 8 ,marginTop:8}}
+        style={{ marginLeft: 8, marginTop: 8 }}
       >
         Register
       </Button>

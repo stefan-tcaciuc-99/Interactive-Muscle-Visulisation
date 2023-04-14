@@ -18,7 +18,7 @@ router.get("/", async (req: Request, res: Response) => {
       {
         params: {
           exercisename: "null",
-          bodypart: bodypart||"null",
+          bodypart: "chest"||"null",
           musclegroup: "null",
           apparatus: apparatus||"null",
           difficulty: "null",
@@ -40,8 +40,8 @@ router.get("/", async (req: Request, res: Response) => {
 
     const exercises = Object.values(exerciseResponse.data.exercises);
 
-    console.log(bodypart, apparatus);
     console.log("Exercise response:", exerciseResponse);
+    console.log(bodypart, apparatus);
 
     console.log("Sending response...");
     res.json(exercises);
