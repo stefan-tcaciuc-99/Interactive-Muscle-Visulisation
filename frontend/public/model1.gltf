@@ -53,7 +53,7 @@
     },
     {
       "doubleSided": true,
-      "name": "rectus abdominis",
+      "name": "Rectus Abdominis",
       "pbrMetallicRoughness": {
         "baseColorTexture": {
           "index": 1

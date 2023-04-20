@@ -1,15 +1,23 @@
 import React from "react";
 import type { ModelViewerElement } from "@google/model-viewer";
 import useHighlightMaterial from "../hooks/useHighlightMaterial";
+import useMuscleColorUpdates from "../hooks/useMuscleColorUpdates";
 import { Paper } from "@mui/material";
+
 
 interface ModelViewerProps {
   modelViewerRef: React.MutableRefObject<ModelViewerElement | null>;
   onMuscleSelected: (muscle: string | null) => void;
+  exerciseCountPerMuscle:Record<string,number>;
 }
 
-const ModelViewer: React.FC<ModelViewerProps> = ({ modelViewerRef ,onMuscleSelected}) => {
+
+const ModelViewer: React.FC<ModelViewerProps> = ({ modelViewerRef ,onMuscleSelected,exerciseCountPerMuscle}) => {
   useHighlightMaterial(modelViewerRef,onMuscleSelected);
+  useMuscleColorUpdates(modelViewerRef, exerciseCountPerMuscle);
+
+ 
+
 
   return (
     <Paper elevation={4} sx={{ display: 'inline-block', overflow: 'hidden',padding: "16px", alignItems: "center", justifyContent: "center",marginLeft:"16px"}}>

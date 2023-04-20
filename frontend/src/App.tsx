@@ -24,6 +24,7 @@ function HomePage() {
     addExerciseToWorkoutPlan,
     removeExerciseFromWorkoutPlan,
     workoutPlan,
+    exerciseCountPerMuscle,
   } = useExerciseData([]);
 
   console.log("Selected Exercise Type:", selectedExerciseType);
@@ -67,6 +68,7 @@ function HomePage() {
           <ModelViewer
             modelViewerRef={modelViewerElementRef}
             onMuscleSelected={selectMuscle}
+            exerciseCountPerMuscle={exerciseCountPerMuscle}
           />
           <Box
             sx={{

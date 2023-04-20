@@ -4,6 +4,7 @@ import { Button, Box } from "@mui/material";
 export interface ExerciseData {
   Exercise_Id: number;
   Exercise_Name: string;
+  overallCategory: string;
 }
 
 interface ExerciseListProps {
