@@ -97,7 +97,7 @@ function HomePage() {
                 onSelect={selectExerciseType}
               />
             </Paper>
-            {selectedExerciseType && exercises && exercises.length > 0 && (
+            {exercises && exercises.length > 0 && (
               <Paper sx={{ padding: "16px", marginTop: "16px" }}>
                 <div>
                   <Typography

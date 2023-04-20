@@ -31,7 +31,7 @@ const useExerciseData = (exerciseData: any) => {
   
 
   useEffect(() => {
-    if (selectedExerciseType || selectedMuscle) {
+    if (selectedExerciseType && selectedMuscle) {
       getExercisesBySelection(selectedMuscle, selectedExerciseType).then((response) => {
         setExercises(response);
       });
