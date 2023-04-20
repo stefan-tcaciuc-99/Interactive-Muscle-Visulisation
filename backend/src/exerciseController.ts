@@ -8,7 +8,7 @@ const {API_ENDPOINT } = process.env;
 const router = express.Router();
 
 router.get("/", async (req: Request, res: Response) => {
-  const { bodypart, apparatus } = req.query;
+  const { musclegroup, apparatus } = req.query;
   const apiUrl = API_ENDPOINT;
 
   try {
@@ -18,8 +18,8 @@ router.get("/", async (req: Request, res: Response) => {
       {
         params: {
           exercisename: "null",
-          bodypart: "chest"||"null",
-          musclegroup: "null",
+          bodypart: "null",
+          musclegroup: musclegroup||"null",
           apparatus: apparatus||"null",
           difficulty: "null",
           utility_name: "null",
@@ -41,7 +41,7 @@ router.get("/", async (req: Request, res: Response) => {
     const exercises = Object.values(exerciseResponse.data.exercises);
 
     console.log("Exercise response:", exerciseResponse);
-    console.log(bodypart, apparatus);
+    console.log(musclegroup||"null", apparatus||"null");
 
     console.log("Sending response...");
     res.json(exercises);

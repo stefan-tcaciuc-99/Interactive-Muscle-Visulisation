@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-export const getExercisesBySelection = async (bodypart: string | null, apparatus: string | null) => {
+export const getExercisesBySelection = async (musclegroup: string | null, apparatus: string | null) => {
   try {
     const response = await axios.get("/exercises", {
       params: {
-        bodypart,
+        musclegroup,
         apparatus,
       },
     });
